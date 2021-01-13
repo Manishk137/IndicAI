@@ -1,0 +1,10 @@
+{	
+    "mail_server" : "smtp.gmail.com",
+    "mail_port" : "465",
+    "mail_use_ssl" : "True",
+    "mail_username" : "kamaleshtestacc@gmail.com",
+    "mail_password" : "lftcrejhpzoywful"
+}
+
+
+
