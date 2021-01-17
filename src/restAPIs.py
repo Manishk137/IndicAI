@@ -4,6 +4,7 @@ import json
 from flask_cors import CORS
 import secrets
 import string
+import os
 from flask_mail import Mail
 import videoupload
 from videoProperties import videoPropertyAPI
@@ -14,7 +15,9 @@ CORS(app)
 api = Api(app)
 
 data = ""
-with open('mailconfig.josn') as f:
+current_directory = os.getcwd()
+path_to_file = os.path.join(current_directory, "mailconfig.josn")
+with open(path_to_file) as f:
   data = json.load(f)
 
 app.config['MAIL_SERVER'] = data['mail_server']
