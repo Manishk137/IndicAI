@@ -19,6 +19,7 @@ export default class HomeMain extends React.Component {
       pageNumber: 0,
       pageSize: 10,
       pageCount: 1,
+      search: false,
       videoList: []
     }
   }
@@ -32,6 +33,7 @@ export default class HomeMain extends React.Component {
         this.setState({
           videoList: this.props.searchResult,
           pageCount: 1,
+          search: true,
           noResult: false
         })
       }
@@ -159,7 +161,7 @@ export default class HomeMain extends React.Component {
                       ))
                     : ''}
                 </div>
-                {!this.state.noResult && (
+                {!this.state.noResult && !this.state.search && (
                   <div className='pagination'>{pages}</div>
                 )}
                 {this.state.noResult && <div className='no-result'>No Result found for given search criteria.</div>}

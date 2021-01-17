@@ -34,7 +34,7 @@ const Uploadvideo = props => {
           const response = JSON.parse(data)
           sessionStorage.setItem('VideoKeys', response.VideoKeys)
           setShowLoader(false)
-          alert(response.message + ' with VideoKeys ' + response.VideoKeys)
+          alert(response.message)
           props.history.push('/')
         })
     } else if (imgFile) {
@@ -50,7 +50,7 @@ const Uploadvideo = props => {
         .then(({ data }) => {
           const response = JSON.parse(data)
           setShowLoader(false)
-          alert(response.message + ' with VideoKey ' + response.VideoKey)
+          alert(response.message)
           props.history.push('/')
         })
     }
