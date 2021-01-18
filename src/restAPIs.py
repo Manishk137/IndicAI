@@ -4,7 +4,6 @@ import json
 from flask_cors import CORS
 import secrets
 import string
-import os
 from flask_mail import Mail
 import videoupload
 from videoProperties import videoPropertyAPI
@@ -15,9 +14,7 @@ CORS(app)
 api = Api(app)
 
 data = ""
-current_directory = os.getcwd()
-path_to_file = os.path.join(current_directory, "mailconfig.josn")
-with open(path_to_file) as f:
+with open('mailconfig.josn') as f:
   data = json.load(f)
 
 app.config['MAIL_SERVER'] = data['mail_server']
@@ -87,6 +84,32 @@ class UploadMultipleVideos(Resource):
                     {
                         "message": "exception occurred",
                         "exception": str(exception)
+                    }
+                    ,
+                    default=str)
+        except Exception as ex:
+            return json.dumps(
+                {
+                    "message": "Exception Occured",
+                    "exception": str(ex)
+                }
+                ,
+                default=str)
+
+
+class UploadModelFiles(Resource):
+    def post(self):
+        try:
+            videouploadobj = videoupload.UploadVideos()
+            if 'files[]' not in request.files:
+                resp = jsonify({'message': 'No file part in the request'})
+                resp.status_code = 400
+                return resp
+            files = request.files.getlist('files[]')
+            returnval, message = videouploadobj.uploadmodelfiles(files)
+            return json.dumps(
+                    {
+                        "message":message
                     }
                     ,
                     default=str)
@@ -351,6 +374,7 @@ api.add_resource(GetTranscript, '/getTranscript/')
 api.add_resource(UpdateTranscript, '/updateTranscript/')
 api.add_resource(GetTotalRecordsCount, '/getTotalRecordsCount/')
 api.add_resource(SearchRecord, '/searchRecord/')
+api.add_resource(UploadModelFiles, '/UploadModelFiles/')
 
 
 if __name__ == '__main__':
