@@ -31,12 +31,12 @@ class SideNav extends React.Component {
                         <span>Model Customization</span>
                     </Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                     <a className="nav-link" href="#">
                         <i className="fas fa-fw fa-users-cog"></i>
                         <span>Account Settings</span>
                     </a>
-                </li>
+                </li> */}
                 <li className="nav-item">
                     <a onClick={this.logOut} className="nav-link" href='javascript:void(0)'>
                         <i className="fas fa-fw fa-sign-out-alt"></i>

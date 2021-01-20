@@ -5,6 +5,7 @@ export const services = {
     register: 'Register/',
     uploadVideo: 'UploadVideo/',
     uploadMultiVideo: 'UploadMultipleVideos/',
+    uploadModelFiles: 'UploadModelFiles/',
     forgotPassword: 'forgotPasswordRetreive/',
     getList: 'GetInfoPaginated/',
     getTotalRecord: 'getTotalRecordsCount/',

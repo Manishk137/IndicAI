@@ -9,51 +9,28 @@ import axios from 'axios'
 import '../upload-video/style.css'
 const Uploadvideo = props => {
   const [showLoader, setShowLoader] = useState(false)
-  const [imgFile, setImgFile] = useState()
   const [imgFiles, setImgFiles] = useState()
   const handleChange = e => {
-    e.target.files.length === 1
-      ? setImgFile(e.target.files[0])
-      : setImgFiles(e.target.files)
+    setImgFiles(e.target.files)
   }
   const handleSubmitFile = () => {
-    if (imgFiles) {
-      let formData = new FormData()
-      for (let i = 0; i < imgFiles.length; i++) {
-        formData.append('files[]', imgFiles[i])
-      }
-      // formData.append('files', imgFiles);
-      setShowLoader(true)
-      axios
-        .post(services.baseUrl + services.uploadMultiVideo, formData, {
-          headers: {
-            'Content-type': 'application/json'
-          }
-        })
-        .then(({ data }) => {
-          const response = JSON.parse(data)
-          sessionStorage.setItem('VideoKeys', response.VideoKeys)
-          setShowLoader(false)
-          alert(response.message + ' with VideoKeys ' + response.VideoKeys)
-          props.history.push('/')
-        })
-    } else if (imgFile) {
-      let formData = new FormData()
-      formData.append('file', imgFile)
-      setShowLoader(true)
-      axios
-        .post(services.baseUrl + services.uploadVideo, formData, {
-          headers: {
-            'Content-type': 'application/json'
-          }
-        })
-        .then(({ data }) => {
-          const response = JSON.parse(data)
-          setShowLoader(false)
-          alert(response.message + ' with VideoKey ' + response.VideoKey)
-          props.history.push('/')
-        })
+    let formData = new FormData()
+    for (let i = 0; i < imgFiles.length; i++) {
+      formData.append('files[]', imgFiles[i])
     }
+    // formData.append('files', imgFiles);
+    setShowLoader(true)
+    axios
+      .post(services.baseUrl + services.uploadModelFiles, formData, {
+        headers: {
+          'Content-type': 'application/json'
+        }
+      })
+      .then(({ data }) => {
+        const response = JSON.parse(data)
+        setShowLoader(false)
+        alert(response.message)
+      })
   }
   return (
     <div>
