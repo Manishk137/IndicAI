@@ -97,6 +97,32 @@ class UploadMultipleVideos(Resource):
                 default=str)
 
 
+class UploadModelFiles(Resource):
+    def post(self):
+        try:
+            videouploadobj = videoupload.UploadVideos()
+            if 'files[]' not in request.files:
+                resp = jsonify({'message': 'No file part in the request'})
+                resp.status_code = 400
+                return resp
+            files = request.files.getlist('files[]')
+            returnval, message = videouploadobj.uploadmodelfiles(files)
+            return json.dumps(
+                    {
+                        "message":message
+                    }
+                    ,
+                    default=str)
+        except Exception as ex:
+            return json.dumps(
+                {
+                    "message": "Exception Occured",
+                    "exception": str(ex)
+                }
+                ,
+                default=str)
+
+
 class RegisterNewUser(Resource):
     def post(self):
         parser.add_argument('email', type=str)
@@ -348,6 +374,7 @@ api.add_resource(GetTranscript, '/getTranscript/')
 api.add_resource(UpdateTranscript, '/updateTranscript/')
 api.add_resource(GetTotalRecordsCount, '/getTotalRecordsCount/')
 api.add_resource(SearchRecord, '/searchRecord/')
+api.add_resource(UploadModelFiles, '/UploadModelFiles/')
 
 
 if __name__ == '__main__':

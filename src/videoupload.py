@@ -59,3 +59,18 @@ class UploadVideos:
         except Exception as ex:
             return (-1, "" ,ex)
 
+
+
+    def uploadmodelfiles(self, files):
+        try:
+            filesList = []
+            for file in files:
+                if file:
+                    filename = file.filename
+                    filename = os.path.splitext(filename)[0]
+                    uploadPath = '../speech_text/{}'.format(filename)
+                    file.save(uploadPath)
+                    file.close()
+            return (0, "model files are uploaded")
+        except Exception as ex:
+            return (-1 ,ex)
